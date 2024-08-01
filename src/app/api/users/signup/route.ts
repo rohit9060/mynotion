@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SignUpSchema } from "@/schema";
-import { prisma, hashPassword, generateOTP, createJwtToken } from "@/lib";
+import {
+  prisma,
+  hashPassword,
+  generateOTP,
+  createJwtToken,
+  sendEmail,
+  UserEmailVerification,
+} from "@/lib";
 
 export async function POST(req: NextRequest) {
   try {
@@ -60,7 +67,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Todo: send email
+    //  send email
+    await sendEmail({
+      toEmail: data.email,
+      subject: "Verify your email",
+      emailBody: await UserEmailVerification(otp, newUser.name),
+    });
 
     // If the request is valid, return a 200 status code
     return NextResponse.json(

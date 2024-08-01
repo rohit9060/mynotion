@@ -3,11 +3,10 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "My Notion",
-  description: "My Notion",
+  description:
+    "Unleash your productivity with My Notion, the ultimate tool for organizing your life. Whether you are jotting down notes, planning your to-do list, or scheduling tasks, Notion brings everything together in one place. Customize your workspace to suit your needs and streamline your workflow with our intuitive and versatile features. Say goodbye to clutter and chaos—embrace a more organized and efficient way of managing your life with My Notion.",
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
   },
 };
 

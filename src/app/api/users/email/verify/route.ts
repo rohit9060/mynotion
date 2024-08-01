@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma, verifyJwtToken } from "@/lib";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { OtpSchema } from "@/schema";
 
 export async function POST(req: NextRequest) {
   try {
-    const token = cookies().get("token");
+    const token =
+      headers().get("authorization")?.split(" ")[1] ||
+      cookies().get("token")?.value;
 
     if (!token) {
       return NextResponse.json(
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     const TokenData: any = await verifyJwtToken(
-      token.value,
+      token,
       process.env.TOKEN_SECRET!
     );
 
@@ -39,9 +41,9 @@ export async function POST(req: NextRequest) {
     }
 
     // check if user already exists
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
-        email: TokenData.email,
+        token: token,
       },
     });
 
@@ -76,6 +78,9 @@ export async function POST(req: NextRequest) {
         isVerified: true,
       },
     });
+
+    // delete token
+    cookies().delete("token");
 
     return NextResponse.json(
       {

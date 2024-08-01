@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { EmailSchema } from "@/schema";
-import { createJwtToken, generateOTP, prisma } from "@/lib";
+import {
+  createJwtToken,
+  generateOTP,
+  prisma,
+  sendEmail,
+  UserEmailVerification,
+} from "@/lib";
 import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
@@ -67,7 +73,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Todo: send email
+    // send email
+    await sendEmail({
+      toEmail: data.email,
+      subject: "Verify your email",
+      emailBody: await UserEmailVerification(otp, user.name),
+    });
 
     // set http only cookie
     cookies().set("token", token, {
