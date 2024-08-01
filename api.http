@@ -1,2 +1,0 @@
-### Get API
-GET http://localhost:3000/api/hello HTTP/1.1
