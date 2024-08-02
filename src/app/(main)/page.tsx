@@ -19,8 +19,8 @@ export default function Home() {
         your life with My Notion.
       </p>
 
-      <Link href="#" className="px-4 py-1 bg-pink-800 rounded-md mt-5">
-        Get Started
+      <Link href="/getapp" className="px-4 py-1 bg-pink-800 rounded-md mt-5">
+        Get App
       </Link>
     </section>
   );

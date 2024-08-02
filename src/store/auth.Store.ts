@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 interface User {
+  id: string;
   name: string;
   avatar: string | null;
   role: string;
@@ -20,6 +21,7 @@ interface AuthState {
 let initialState = {
   isAuth: false,
   user: {
+    id: "",
     name: "",
     avatar: null,
     role: "",

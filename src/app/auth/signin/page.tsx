@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +17,6 @@ import { useAuthStore } from "@/store";
 function Page() {
   const [isPassword, setIsPassword] = useState(true);
   const { signIn } = useAuthStore();
-  const router = useRouter();
 
   const {
     register,
@@ -35,13 +33,14 @@ function Page() {
     onSuccess: (data: any) => {
       toast.success(data.message);
       signIn({
+        id: data.data.id,
         name: data.data.name,
         email: data.data.email,
         avatar: data.data.avatar,
         role: data.data.role,
       });
       reset();
-      router.push("/");
+      window.location.replace("/dashboard");
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message || error?.message);

@@ -12,8 +12,8 @@ export default function AuthLayout({
   const router = useRouter();
 
   useEffect(() => {
-    if (auth.isAuth) {
-      router.push("/");
+    if (auth.isAuth === true) {
+      router.push("/dashboard");
     }
   }, [auth.isAuth, router]);
 
