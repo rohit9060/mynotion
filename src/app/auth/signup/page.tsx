@@ -154,7 +154,7 @@ function Page() {
         </form>
 
         <div className="mt-6 text-center flex flex-col gap-2">
-          <Link href="/auth/forgot-password" className="text-blue-500">
+          <Link href="/auth/password/forgot" className="text-blue-500">
             Forgot password?
           </Link>
 

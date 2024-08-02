@@ -58,3 +58,24 @@ export const OtpSchema = z.object({
 });
 
 export type OtpType = z.infer<typeof OtpSchema>;
+
+export const ResetPasswordSchema = z.object({
+  otp: z
+    .string({ required_error: "otp is required" })
+    .min(4, {
+      message: "minimum 4 digits",
+    })
+    .max(6, {
+      message: "maximum 6 digits",
+    }),
+  password: z
+    .string({ required_error: "password is required" })
+    .min(8, {
+      message: "minimum 8 characters",
+    })
+    .max(50, {
+      message: "maximum 50 characters",
+    }),
+});
+
+export type ResetPasswordType = z.infer<typeof ResetPasswordSchema>;
