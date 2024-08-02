@@ -155,6 +155,10 @@ function Page() {
             Forgot password?
           </Link>
 
+          <Link href="/auth/email-verification" className="text-blue-500">
+            Did not receive verification email? Resend
+          </Link>
+
           <Link href="/auth/signin" className="text-blue-500">
             Already have an account? Sign in
           </Link>
