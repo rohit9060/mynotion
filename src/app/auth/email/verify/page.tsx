@@ -11,9 +11,11 @@ import { Api } from "@/lib";
 import { FaKey } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { Suspense } from "react";
 
-function Page() {
+function VerifyEmail() {
   const router = useRouter();
+
   const searchParams = useSearchParams();
   const search = searchParams.get("otp");
 
@@ -94,6 +96,14 @@ function Page() {
         </div>
       </div>
     </section>
+  );
+}
+
+function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmail />
+    </Suspense>
   );
 }
 
