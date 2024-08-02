@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +18,7 @@ import toast from "react-hot-toast";
 
 function Page() {
   const [isPassword, setIsPassword] = useState(true);
+  const router = useRouter();
 
   const {
     register,
@@ -33,6 +35,7 @@ function Page() {
     onSuccess: (data: any) => {
       toast.success(data.message);
       reset();
+      router.push("/auth/email/verify");
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message || error?.message);
@@ -155,7 +158,7 @@ function Page() {
             Forgot password?
           </Link>
 
-          <Link href="/auth/email-verification" className="text-blue-500">
+          <Link href="/auth/email/send" className="text-blue-500">
             Did not receive verification email? Resend
           </Link>
 
