@@ -1,50 +1,60 @@
 import * as z from "zod";
 
 export const SignUpSchema = z.object({
-  name: z.string({
-    required_error: "Name is required",
-  }),
+  name: z
+    .string({
+      required_error: "name is required",
+    })
+    .min(2, { message: "minimum 2 characters" }),
   email: z
-    .string({ required_error: "Email is required" })
-    .email({ message: "Invalid email" }),
+    .string({ required_error: "email is required" })
+    .email({ message: "invalid email" }),
   phone: z.string().optional(),
   password: z
-    .string({ required_error: "Password is required" })
+    .string({ required_error: "password is required" })
     .min(8, {
-      message: "Password must be at least 8 characters long",
+      message: "minimum 8 characters",
     })
     .max(50, {
-      message: "Password must be less than 50 characters long",
+      message: "maximum 50 characters",
     }),
 });
+
+export type SignUpType = z.infer<typeof SignUpSchema>;
 
 export const SignInSchema = z.object({
   email: z
-    .string({ required_error: "Email is required" })
-    .email({ message: "Invalid email" }),
+    .string({ required_error: "email is required" })
+    .email({ message: "invalid email" }),
   password: z
-    .string({ required_error: "Password is required" })
+    .string({ required_error: "password is required" })
     .min(8, {
-      message: "Password must be at least 8 characters long",
+      message: "minimum 8 characters",
     })
     .max(50, {
-      message: "Password must be less than 50 characters long",
+      message: "maximum 50 characters",
     }),
 });
+
+export type SignInType = z.infer<typeof SignInSchema>;
 
 export const EmailSchema = z.object({
   email: z
-    .string({ required_error: "Email is required" })
-    .email({ message: "Invalid email" }),
+    .string({ required_error: "email is required" })
+    .email({ message: "invalid email" }),
 });
+
+export type EmailType = z.infer<typeof EmailSchema>;
 
 export const OtpSchema = z.object({
   otp: z
-    .string({ required_error: "OTP is required" })
+    .string({ required_error: "otp is required" })
     .min(4, {
-      message: "OTP must be 4 digits long",
+      message: "minimum 4 digits",
     })
     .max(6, {
-      message: "OTP must be 6 digits long",
+      message: "maximum 6 digits",
     }),
 });
+
+export type OtpType = z.infer<typeof OtpSchema>;

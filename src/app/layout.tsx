@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
+import { ReactQueryProvider } from "@/lib";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "My Notion",
@@ -17,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster />
+      </body>
     </html>
   );
 }

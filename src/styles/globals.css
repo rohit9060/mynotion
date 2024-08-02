@@ -8,3 +8,7 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+
+input {
+  @apply focus:outline-none;
+}

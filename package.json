@@ -3,25 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev ",
+    "dev": "next dev --turbo",
     "build": "pnpm prisma && pnpm generate && next build",
     "start": "next start",
-    "lint": "next lint",
-    "migrate": "prisma migrate dev",
-    "generate": "prisma generate",
-    "studio": "prisma studio  --browser chrome",
-    "prisma": "prisma migrate deploy"
+    "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@tanstack/react-query": "^5.51.18",
     "axios": "^1.7.3",
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
-    "zod": "^3.23.8"
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.2.1",
+    "react-toastify": "^10.0.5",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.51.18",
     "@types/node": "^20.14.13",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
