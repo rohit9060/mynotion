@@ -79,3 +79,16 @@ export const ResetPasswordSchema = z.object({
 });
 
 export type ResetPasswordType = z.infer<typeof ResetPasswordSchema>;
+
+export const TodoSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  items: z
+    .array(
+      z.object({
+        name: z.string().min(1, "Item is required"),
+      })
+    )
+    .min(1, "At least one item is required"),
+});
+
+export type TodoFormType = z.infer<typeof TodoSchema>;

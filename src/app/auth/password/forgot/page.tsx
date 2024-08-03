@@ -5,21 +5,17 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EmailSchema, EmailType } from "@/schema";
 import { Api } from "@/lib";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { FormInput, SubmitButton } from "@/components";
 
 // icons
 import { MdEmail } from "react-icons/md";
-import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 function Page() {
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<EmailType>({
+  const { register, handleSubmit, control, reset } = useForm<EmailType>({
     resolver: zodResolver(EmailSchema),
   });
 
@@ -49,32 +45,15 @@ function Page() {
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
-            <MdEmail
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {errors.email && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            control={control}
+            {...register("email")}
+            name="email"
+            label="Email"
+            icon={<MdEmail size={20} />}
+          />
 
-          <div className="mt-8">
-            <button
-              className="bg-pink-800 px-4 py-1 rounded-md w-full"
-              disabled={isPending}
-            >
-              {isPending ? "Loading..." : "Forgot Password"}
-            </button>
-          </div>
+          <SubmitButton title="Forgot Password" isPending={isPending} />
         </form>
 
         <div className="mt-6 text-center flex flex-col gap-2">

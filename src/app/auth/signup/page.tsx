@@ -1,31 +1,24 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema, SignUpType } from "@/schema";
 import { Api } from "@/lib";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { FormInput, SubmitButton } from "@/components";
 
 // icons
 import { MdEmail } from "react-icons/md";
 import { SiNamebase } from "react-icons/si";
 import { FaPhoneAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 function Page() {
-  const [isPassword, setIsPassword] = useState(true);
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<SignUpType>({
+  const { register, handleSubmit, control, reset } = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
   });
 
@@ -53,104 +46,41 @@ function Page() {
           <h1 className="font-semibold text-xl text-lime-500">Sign Up</h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type="text"
-              placeholder="Name"
-              {...register("name")}
-            />
-            <SiNamebase
-              className="absolute start-2 top-3 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {errors.name && errors.name.message && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.name.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            {...register("name")}
+            label="Name"
+            placeholder="Name"
+            control={control}
+            icon={<SiNamebase size={20} />}
+          />
 
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
-            <MdEmail
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {errors.email && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            {...register("email")}
+            label="Email"
+            placeholder="Email"
+            type="email"
+            control={control}
+            icon={<MdEmail size={20} />}
+          />
 
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type="text"
-              placeholder="Phone"
-              {...register("phone")}
-            />
-            <FaPhoneAlt
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {errors.phone && errors.phone.message && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.phone.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            {...register("phone")}
+            label="Phone"
+            placeholder="Phone"
+            control={control}
+            icon={<FaPhoneAlt size={20} />}
+          />
 
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type={isPassword ? "password" : "text"}
-              placeholder="Password"
-              {...register("password")}
-            />
-            <RiLockPasswordFill
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {isPassword ? (
-              <FaEyeSlash
-                className="absolute end-2 top-4 m-auto w-5 h-5 text-black"
-                size={20}
-                onClick={() => {
-                  setIsPassword(false);
-                }}
-              />
-            ) : (
-              <FaEye
-                className="absolute end-2 top-4 m-auto w-5 h-5 text-black"
-                size={20}
-                onClick={() => {
-                  setIsPassword(true);
-                }}
-              />
-            )}
+          <FormInput
+            {...register("password")}
+            label="Password"
+            placeholder="Password"
+            type="password"
+            control={control}
+            icon={<RiLockPasswordFill size={20} />}
+          />
 
-            {errors.password && errors.password.message && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
-          <div className="mt-8">
-            <button
-              className="bg-pink-800 px-4 py-1 rounded-md w-full"
-              disabled={isPending}
-            >
-              {isPending ? "Loading..." : "Sign Up"}
-            </button>
-          </div>
+          <SubmitButton title="Sign Up" isPending={isPending} />
         </form>
 
         <div className="mt-6 text-center flex flex-col gap-2">

@@ -1,29 +1,22 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignInType, SignInSchema } from "@/schema";
 import { Api } from "@/lib";
-
-// icons
-import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/store";
+import { FormInput } from "@/components";
+
+// icons
+import { MdEmail } from "react-icons/md";
+import { SubmitButton } from "@/components";
 
 function Page() {
-  const [isPassword, setIsPassword] = useState(true);
   const { signIn } = useAuthStore();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<SignInType>({
+  const { register, handleSubmit, reset, control } = useForm<SignInType>({
     resolver: zodResolver(SignInSchema),
   });
 
@@ -53,73 +46,29 @@ function Page() {
 
   return (
     <section className="flex flex-col items-center justify-center h-screen gap-3 px-3">
-      <div className="flex flex-col shadow-lg bg-gray-800 py-5 px-3 rounded-lg w-full lg:w-1/3 md:w-2/3">
+      <div className="flex flex-col shadow-lg bg-gray-800 backdrop-blur py-5 px-3 rounded-lg w-full lg:w-1/3 md:w-2/3">
         <div className=" text-center mb-5">
           <h1 className="font-semibold text-xl text-lime-500">Sign In</h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
-            <MdEmail
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {errors.email && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            control={control}
+            {...register("email")}
+            name="email"
+            label="Email"
+            icon={<MdEmail size={20} />}
+          />
 
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type={isPassword ? "password" : "text"}
-              placeholder="Password"
-              {...register("password")}
-            />
-            <RiLockPasswordFill
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={20}
-            />
-            {isPassword ? (
-              <FaEyeSlash
-                className="absolute end-2 top-4 m-auto w-5 h-5 text-black"
-                size={20}
-                onClick={() => {
-                  setIsPassword(false);
-                }}
-              />
-            ) : (
-              <FaEye
-                className="absolute end-2 top-4 m-auto w-5 h-5 text-black"
-                size={20}
-                onClick={() => {
-                  setIsPassword(true);
-                }}
-              />
-            )}
+          <FormInput
+            control={control}
+            {...register("password")}
+            name="password"
+            label="Password"
+            type="password"
+            icon={<MdEmail size={20} />}
+          />
 
-            {errors.password && errors.password.message && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
-          <div className="mt-8">
-            <button
-              className="bg-pink-800 px-4 py-1 rounded-md w-full"
-              disabled={isPending}
-            >
-              {isPending ? "Loading..." : "Sign In"}
-            </button>
-          </div>
+          <SubmitButton title="Sign In" isPending={isPending} />
         </form>
 
         <div className="mt-6 text-center flex flex-col gap-2">

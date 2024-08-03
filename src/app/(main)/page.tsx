@@ -1,3 +1,4 @@
+import { MyModal, TodoForm, TodoTable } from "@/components";
 import Link from "next/link";
 
 export default function Home() {
@@ -22,6 +23,8 @@ export default function Home() {
       <Link href="/getapp" className="px-4 py-1 bg-pink-800 rounded-md mt-5">
         Get App
       </Link>
+
+      <TodoTable />
     </section>
   );
 }

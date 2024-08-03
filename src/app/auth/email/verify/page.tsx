@@ -9,6 +9,7 @@ import { Api } from "@/lib";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Suspense } from "react";
+import { FormInput, SubmitButton } from "@/components";
 
 // icons
 import { FaKey } from "react-icons/fa";
@@ -19,12 +20,7 @@ function VerifyEmail() {
   const searchParams = useSearchParams();
   const search = searchParams.get("otp");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<OtpType>({
+  const { register, handleSubmit, control, reset } = useForm<OtpType>({
     resolver: zodResolver(OtpSchema),
     defaultValues: {
       otp: search || "",
@@ -57,32 +53,15 @@ function VerifyEmail() {
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-8 relative">
-            <input
-              className="h-[2.5rem]  w-full  m-1  py-2 pl-8 pr-4 text-black rounded-md"
-              type="text"
-              placeholder="OTP"
-              {...register("otp")}
-            />
-            <FaKey
-              className="absolute start-2 top-4 m-auto w-5 h-5 text-black"
-              size={18}
-            />
-            {errors.otp && (
-              <p className="mt-2 text-red-600 text-center">
-                {errors.otp.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            control={control}
+            {...register("otp")}
+            name="otp"
+            label="OTP"
+            icon={<FaKey size={20} />}
+          />
 
-          <div className="mt-8">
-            <button
-              className="bg-pink-800 px-4 py-1 rounded-md w-full"
-              disabled={isPending}
-            >
-              {isPending ? "Loading..." : "Verify"}
-            </button>
-          </div>
+          <SubmitButton title="Verify" isPending={isPending} />
         </form>
 
         <div className="mt-6 text-center flex flex-col gap-2">
