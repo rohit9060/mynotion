@@ -21,7 +21,7 @@ export function ReactQueryProvider({
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { auth } = useAuthStore();
+  const { auth } = useAuthStore((state) => state);
   const router = useRouter();
 
   useEffect(() => {
